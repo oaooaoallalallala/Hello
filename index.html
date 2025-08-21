@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thanh Tuấn - 11A16 chúc mừng sinh nhật Đông</title>
+  <style>
+    :root{
+      --bg:#0b1020; --panel:#0f172a; --text:#e6f0ff; --muted:#94a3b8; --cyan:#22d3ee; --pink:#f472b6; --ring:rgba(34,211,238,.35)
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    .container{max-width:1100px;margin:0 auto;padding:0 16px}
+    header{position:relative;padding:80px 0 30px;text-align:center}
+    header h1{margin:0;font-weight:900;letter-spacing:.2px;font-size:clamp(26px,4vw,44px)}
+    header h1 span{color:var(--cyan)}
+    .sub{color:var(--muted);max-width:720px;margin:12px auto 0}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+    .card{position:relative;background:linear-gradient(180deg,rgba(34,211,238,.08),rgba(244,114,182,.06));border:1px solid var(--ring);border-radius:18px;padding:22px;backdrop-filter:blur(6px);box-shadow:0 0 28px rgba(34,211,238,.18)}
+    .title{margin:0 0 10px;font-size:clamp(18px,2.4vw,24px)}
+    .small{font-size:12px;color:var(--muted)}
+    footer{color:var(--muted);text-align:center;margin:30px 0}
+    .gallery{display:grid;grid-template-columns:1fr;gap:12px}
+    @media (min-width:640px){.gallery{grid-template-columns:repeat(3,1fr)}}
+    .imgwrap{border:1px solid var(--ring);border-radius:16px;overflow:hidden;box-shadow:0 0 20px rgba(34,211,238,.15)}
+    .imgwrap img{display:block;width:100%;height:260px;object-fit:cover}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.5;margin:14px 0}
+    #matrix{position:fixed;inset:0;z-index:-1;opacity:.4}
+    .ring{position:absolute;inset:-2px;border-radius:20px;pointer-events:none;box-shadow:0 0 55px rgba(34,211,238,.25)}
+    .badge{display:inline-block;border:1px solid var(--ring);color:var(--cyan);padding:4px 10px;border-radius:999px;font-weight:600;font-size:12px;background:rgba(34,211,238,.08)}
+  </style>
+</head>
+<body>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+  <header class="container">
+    <h1>Thanh Tuấn - 11A16 <span>chúc mừng sinh nhật Đông</span></h1>
+    <p class="sub" id="typing"></p>
+  </header>
+
+  <main class="container grid">
+    <section class="card">
+      <div class="ring"></div>
+      <h2 class="title">Lời chúc gửi Đông</h2>
+      <div class="divider"></div>
+      <p>
+        Chúc Đông một sinh nhật thật <strong style="color:var(--cyan)">vui vẻ</strong> và tràn đầy năng lượng! Mong cậu luôn giữ nhiệt với IT,
+        học đâu nhớ đó, code mượt như AI tối ưu, bug nào cũng <strong style="color:var(--pink)">fix trong một nốt nhạc</strong>.
+        Tuổi mới mạnh khỏe, điểm số rực rỡ, dự án nào cũng thành công và luôn có những người bạn tuyệt vời ở bên. Happy Birthday! 🚀🎉
+      </p>
+    </section>
+
+    <aside class="card">
+      <div class="ring"></div>
+      <h3 class="title" style="margin-bottom:8px">Bản nhạc mừng sinh nhật</h3>
+      <audio controls style="width:100%">
+        <source src="assets\audio\hpbd.mp4" type="audio/mp4" />
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+      </audio>
+      <p class="small">Nhấn ▶ để phát – âm thanh do Tuấn chuẩn bị.</p>
+    </aside>
+
+    <section class="card" style="grid-column:1/-1">
+      <div class="ring"></div>
+      <h3 class="title">Khoảnh khắc của Đông</h3>
+      <div class="divider"></div>
+      <div class="gallery">
+        <div class="imgwrap"><img src="assets/images/z6930856758981_3ebc1c4f9857a25e443534e56fe0800b.jpg" alt="Ảnh 1 của Đông"></div>
+        <div class="imgwrap"><img src="assets/images/z6930856762557_b936f6745e08193254f81866777f1087.jpg" alt="Ảnh 2 của Đông"></div>
+        <div class="imgwrap"><img src="assets\images\z6930856772932_6da1ede966d3af40c8bb0db1de788d96.jpg" alt="Ảnh 3 của Đông"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container"><span class="small">© <span id="year"></span> Thanh Tuấn → Đông</span></footer>
+
+  <script>
+    // Typing effect
+    (function(){
+      const el = document.getElementById('typing');
+      const text = 'Website mini phong cách AI/Tech dành riêng cho ngày đặc biệt của Đông.';
+      let i = 0; function tick(){ el.textContent = text.slice(0, i++); if(i <= text.length){ setTimeout(tick, 35); } }
+      tick();
+    })();
+
+    // Year (safe if element exists)
+    (function(){
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
+
+    // Matrix animation
+    (function(){
+      const c = document.getElementById('matrix');
+      const ctx = c.getContext('2d');
+      function resize(){ c.width = innerWidth; c.height = innerHeight; columns = Math.floor(c.width / fontSize); drops = Array(columns).fill(1); }
+      let fontSize = 14; let columns = 0; let drops = [];
+      const chars = ('01AI<>{}[]#*+/$').split('');
+      window.addEventListener('resize', resize); resize();
+      (function draw(){
+        ctx.fillStyle = 'rgba(3,7,18,0.25)';
+        ctx.fillRect(0,0,c.width,c.height);
+        ctx.fillStyle = '#22d3ee';
+        ctx.font = fontSize + 'px monospace';
+        for(let i=0;i<drops.length;i++){
+          const text = chars[Math.floor(Math.random()*chars.length)];
+          ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+          if(drops[i]*fontSize > c.height && Math.random() > 0.975){ drops[i] = 0; }
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      })();
+    })();
+  </script>
+</body>
+</html>
